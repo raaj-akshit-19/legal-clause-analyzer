@@ -1,3 +1,6 @@
+import io
+import json
+import tempfile
 from fastapi import FastAPI, Form, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse, JSONResponse
@@ -6,8 +9,6 @@ from analyzer import analyze_clauses
 from fpdf import FPDF
 from docx import Document
 import os
-import io
-import json
 
 app = FastAPI()
 
@@ -59,10 +60,9 @@ async def download_file(format: str = Form(...), data: str = Form(...)):
             pdf.multi_cell(0, 10, txt=f"Consequence: {clause['consequence']}")
             pdf.ln(5)
             
-        # Output to a temporary file or bytes
-        # FPDF output to string is a bit tricky in py3, usually we write to file
+        # Output to a temporary file
         filename = "analysis_report.pdf"
-        output_path = os.path.join(os.getcwd(), filename)
+        output_path = os.path.join(tempfile.gettempdir(), filename)
         pdf.output(output_path)
         
         return FileResponse(output_path, media_type='application/pdf', filename=filename)
@@ -78,7 +78,7 @@ async def download_file(format: str = Form(...), data: str = Form(...)):
             doc.add_paragraph("") # Space
 
         filename = "analysis_report.docx"
-        output_path = os.path.join(os.getcwd(), filename)
+        output_path = os.path.join(tempfile.gettempdir(), filename)
         doc.save(output_path)
         
         return FileResponse(output_path, media_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document', filename=filename)
