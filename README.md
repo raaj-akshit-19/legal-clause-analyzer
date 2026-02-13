@@ -4,6 +4,7 @@ A powerful, client-side web application that uses advanced pattern matching to i
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Status](https://img.shields.io/badge/status-active-success.svg)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fraaj-akshit-19%2Flegal-clause-analyzer)
 
 ## 🌟 Features
 
